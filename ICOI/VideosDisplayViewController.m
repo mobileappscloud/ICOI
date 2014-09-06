@@ -1,20 +1,31 @@
 //
-//  PrayerScheduleViewController.m
+//  VideosDisplayViewController.m
 //  ICOI
 //
-//  Created by iMac on 8/8/14.
+//  Created by iMac on 8/13/14.
 //  Copyright (c) 2014 CongenialApps. All rights reserved.
 //
 
-#import "PrayerScheduleViewController.h"
+#import "VideosDisplayViewController.h"
+#import "YKMediaPlayerKit.h"
+#import "YKYouTubeVideo.h"
 #import "SWRevealViewController.h"
-@interface PrayerScheduleViewController ()
+
+//NSString *const kYouTubeVideo = @"http://www.youtube.com/watch?v=1hZ98an9wjo";
+NSString *const kYouTubeVideo = @"https://www.youtube.com/watch?v=mwHoAbYaZhg";
+
+@interface VideosDisplayViewController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *youTubeView;
 
 @end
 
-@implementation PrayerScheduleViewController
-@synthesize myWebView;
+@implementation VideosDisplayViewController
+{
+    YKYouTubeVideo  *_youTubeVideo;
 
+}
+@synthesize vidURLString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,28 +38,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
-
+    
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] init];
     UIImage *image = [UIImage imageNamed:@"menu.png"];
     [leftButton setImage:image];
     self.navigationItem.leftBarButtonItem = leftButton;
     leftButton.action = @selector(revealToggle:);
     
+    _youTubeVideo = [[YKYouTubeVideo alloc] initWithContent:[NSURL URLWithString:vidURLString]];
+    [_youTubeVideo parseWithCompletion:^(NSError *error) {
+        [_youTubeVideo thumbImage:YKQualityLow completion:^(UIImage *thumbImage, NSError *error) {
+            self.youTubeView.image = thumbImage;
+        }];
+    }];
 
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     // Do any additional setup after loading the view.
-    
-    //set up web view and link it to the masjid's prayer schedule home page
-
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.icoi.net/prayerschedule"]];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)youTubeButtonPressed:(UIButton *)sender {
+    
+    [_youTubeVideo play:YKQualityHigh];
+
+    
 }
 
 /*

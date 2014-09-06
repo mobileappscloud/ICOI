@@ -16,7 +16,7 @@
 @end
 
 @implementation MapViewController
-
+@synthesize mapView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,6 +25,9 @@
     }
     return self;
 }
+
+
+
 
 - (void)viewDidLoad
 {
@@ -38,7 +41,52 @@
     
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+    self.mapView.delegate = self;
+    
+    // Ensure that we can view our own location in the map view.
+    [self.mapView setShowsUserLocation:YES];
+    
+    //Instantiate a location object.
+    locationManager = [[CLLocationManager alloc] init];
+    
+    //Make this controller the delegate for the location manager.
+    [locationManager setDelegate:self];
+    
+    //Set some paramater for the location object.
+    [locationManager setDistanceFilter:kCLDistanceFilterNone];
+    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    
+    //Set the first launch instance variable to allow the map to zoom on the user location when first launched.
+    firstLaunch=YES;
+    
+  
+
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    CLLocationCoordinate2D pinCoordinate;
+    pinCoordinate.latitude = 33.696743;
+    pinCoordinate.longitude = -117.765443;
+    point.coordinate = pinCoordinate;
+    point.title = @"Islamic Center of Irvine";
+    point.subtitle = @"2 Truman Irvine CA 92620",
+    [mapView addAnnotation:point];
+   // [mapView setCenterCoordinate:pinCoordinate];
+    
+    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(pinCoordinate, 1000, 1000);
+    [mapView setRegion:region];
 }
+
+#pragma mark - MKMapViewDelegate methods.
+
+
+
+
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

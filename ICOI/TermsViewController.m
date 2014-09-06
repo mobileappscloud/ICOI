@@ -1,18 +1,18 @@
 //
-//  PrayerScheduleViewController.m
+//  TermsViewController.m
 //  ICOI
 //
-//  Created by iMac on 8/8/14.
+//  Created by iMac on 8/14/14.
 //  Copyright (c) 2014 CongenialApps. All rights reserved.
 //
 
-#import "PrayerScheduleViewController.h"
+#import "TermsViewController.h"
 #import "SWRevealViewController.h"
-@interface PrayerScheduleViewController ()
+@interface TermsViewController ()
 
 @end
 
-@implementation PrayerScheduleViewController
+@implementation TermsViewController
 @synthesize myWebView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -27,22 +27,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
-
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] init];
     UIImage *image = [UIImage imageNamed:@"menu.png"];
     [leftButton setImage:image];
     self.navigationItem.leftBarButtonItem = leftButton;
     leftButton.action = @selector(revealToggle:);
     
-
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.icoi.net/page/terms"]];
     // Do any additional setup after loading the view.
-    
-    //set up web view and link it to the masjid's prayer schedule home page
-
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.icoi.net/prayerschedule"]];
 }
 
 - (void)didReceiveMemoryWarning

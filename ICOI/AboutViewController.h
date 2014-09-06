@@ -1,13 +1,13 @@
 //
-//  VideosViewController.h
+//  AboutViewController.h
 //  ICOI
 //
-//  Created by iMac on 8/8/14.
+//  Created by iMac on 8/15/14.
 //  Copyright (c) 2014 CongenialApps. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface VideosViewController : UIViewController
+@interface AboutViewController : UIViewController
 
 @end
